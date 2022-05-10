@@ -38,7 +38,7 @@ import (
 	"os"
 	"runtime/debug"
 
-	"github.com/gogo/protobuf/proto"
+	"google.golang.org/protobuf/proto"
 
 	"github.com/multiformats/go-varint"
 )
@@ -62,23 +62,25 @@ func (uw *uvarintWriter) WriteMsg(msg proto.Message) (err error) {
 	}()
 
 	var data []byte
-	if m, ok := msg.(interface {
-		MarshalTo(data []byte) (n int, err error)
-	}); ok {
-		n, ok := getSize(m)
-		if ok {
-			if n+varint.MaxLenUvarint63 >= len(uw.buffer) {
-				uw.buffer = make([]byte, n+varint.MaxLenUvarint63)
-			}
-			lenOff := varint.PutUvarint(uw.buffer, uint64(n))
-			_, err = m.MarshalTo(uw.buffer[lenOff:])
-			if err != nil {
-				return err
-			}
-			_, err = uw.w.Write(uw.buffer[:lenOff+n])
-			return err
-		}
-	}
+	// This code is not usable with Google Protobuf, which does not support MarshalTo
+
+	// if m, ok := msg.(interface {
+	// 	MarshalTo(data []byte) (n int, err error)
+	// }); ok {
+	// 	n, ok := getSize(m)
+	// 	if ok {
+	// 		if n+varint.MaxLenUvarint63 >= len(uw.buffer) {
+	// 			uw.buffer = make([]byte, n+varint.MaxLenUvarint63)
+	// 		}
+	// 		lenOff := varint.PutUvarint(uw.buffer, uint64(n))
+	// 		_, err = m.MarshalTo(uw.buffer[lenOff:])
+	// 		if err != nil {
+	// 			return err
+	// 		}
+	// 		_, err = uw.w.Write(uw.buffer[:lenOff+n])
+	// 		return err
+	// 	}
+	// }
 
 	// fallback
 	data, err = proto.Marshal(msg)
