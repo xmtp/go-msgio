@@ -1,4 +1,4 @@
-module github.com/libp2p/go-msgio
+module github.com/xmtp/go-msgio
 
 go 1.17
 
