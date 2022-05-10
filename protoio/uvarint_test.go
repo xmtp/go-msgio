@@ -40,10 +40,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/libp2p/go-msgio/test"
+	"github.com/xmtp/go-msgio/test"
 
-	"github.com/libp2p/go-msgio/protoio"
 	"github.com/multiformats/go-varint"
+	"github.com/xmtp/go-msgio/protoio"
 )
 
 func TestVarintNormal(t *testing.T) {
