@@ -82,7 +82,6 @@ func (uw *uvarintWriter) WriteMsg(msg proto.Message) (err error) {
 	// 	}
 	// }
 
-	// fallback
 	data, err = proto.Marshal(msg)
 	if err != nil {
 		return err
