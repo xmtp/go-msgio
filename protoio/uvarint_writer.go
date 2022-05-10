@@ -62,26 +62,6 @@ func (uw *uvarintWriter) WriteMsg(msg proto.Message) (err error) {
 	}()
 
 	var data []byte
-	// This code is not usable with Google Protobuf, which does not support MarshalTo
-
-	// if m, ok := msg.(interface {
-	// 	MarshalTo(data []byte) (n int, err error)
-	// }); ok {
-	// 	n, ok := getSize(m)
-	// 	if ok {
-	// 		if n+varint.MaxLenUvarint63 >= len(uw.buffer) {
-	// 			uw.buffer = make([]byte, n+varint.MaxLenUvarint63)
-	// 		}
-	// 		lenOff := varint.PutUvarint(uw.buffer, uint64(n))
-	// 		_, err = m.MarshalTo(uw.buffer[lenOff:])
-	// 		if err != nil {
-	// 			return err
-	// 		}
-	// 		_, err = uw.w.Write(uw.buffer[:lenOff+n])
-	// 		return err
-	// 	}
-	// }
-
 	data, err = proto.Marshal(msg)
 	if err != nil {
 		return err
