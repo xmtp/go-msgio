@@ -39,9 +39,8 @@ import (
 	"os"
 	"runtime/debug"
 
-	"github.com/gogo/protobuf/proto"
-
 	"github.com/multiformats/go-varint"
+	"google.golang.org/protobuf/proto"
 )
 
 type uvarintReader struct {
